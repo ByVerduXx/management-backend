@@ -31,4 +31,12 @@ public class Concert {
     private LocalDateTime soundcheck;
 
     private String scores;
+
+    public Concert(String title, String description, LocalDateTime date, LocalDateTime soundcheck, String scores) {
+        this.title = title;
+        this.description = description;
+        this.date = date;
+        this.soundcheck = soundcheck;
+        this.scores = scores;
+    }
 }
