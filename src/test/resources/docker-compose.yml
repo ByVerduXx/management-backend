@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  db:
+    image: mysql:8.0.32
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ofc
+      MYSQL_USER: ofc
+      MYSQL_PASSWORD: ofc
+    ports:
+      - "3308:3306"

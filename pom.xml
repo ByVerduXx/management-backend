@@ -102,7 +102,39 @@
 					</execution>
 				</executions>
 			</plugin>
-
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.41.0</version>
+				<configuration>
+					<verbose>true</verbose>
+					<images>
+						<image>
+							<external>
+								<type>compose</type>
+								<basedir>${project.basedir}/src/test/resources</basedir>
+								<ignoreBuild>true</ignoreBuild>
+							</external>
+						</image>
+					</images>
+				</configuration>
+				<executions>
+					<execution>
+						<id>start</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>stop</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 

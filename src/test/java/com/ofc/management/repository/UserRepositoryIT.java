@@ -5,6 +5,7 @@ import com.ofc.management.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
@@ -13,6 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class UserRepositoryIT {
 
     @Autowired
@@ -23,7 +25,7 @@ class UserRepositoryIT {
 
     @BeforeEach
     void setup() {
-        testEntityManager.getEntityManager().createQuery("delete from users").executeUpdate();
+        testEntityManager.getEntityManager().createQuery("delete from User").executeUpdate();
     }
 
     @Test
@@ -33,7 +35,7 @@ class UserRepositoryIT {
         User user = new User("Daniel", "Verduras Gallego", "daniel.verduras", "mypassword", instrument);
         List<User> users = List.of(new User("Daniel", "Verduras Gallego", "daniel.verduras", "mypassword", instrument));
         userRepository.save(user);
-        List<User> userDB = testEntityManager.getEntityManager().createQuery("from users").getResultList();
+        List<User> userDB = testEntityManager.getEntityManager().createQuery("from User").getResultList();
         assertEquals(users, userDB);
     }
 
@@ -42,7 +44,7 @@ class UserRepositoryIT {
         User user = new User("Daniel", "Verduras Gallego", "daniel.verduras", "mypassword", "CEO");
         List<User> admins = List.of(new User("Daniel", "Verduras Gallego", "daniel.verduras", "mypassword", "CEO"));
         userRepository.save(user);
-        List<User> usersDB = testEntityManager.getEntityManager().createQuery("from users").getResultList();
+        List<User> usersDB = testEntityManager.getEntityManager().createQuery("from User").getResultList();
         assertEquals(admins, usersDB);
     }
 
