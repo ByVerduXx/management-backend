@@ -12,9 +12,4 @@ services:
     ports:
       - "3306:3306"
     volumes:
-        - ./data.sql:/docker-entrypoint-initdb.d/data.sql
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - "9000:8080"
+        - ./createTables.sql:/docker-entrypoint-initdb.d/createTables.sql
