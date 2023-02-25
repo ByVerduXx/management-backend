@@ -23,14 +23,14 @@ public class ConcertRepositoryIT {
 
     @BeforeEach
     void setup() {
-        testEntityManager.getEntityManager().createQuery("delete from concerts").executeUpdate();
+        testEntityManager.getEntityManager().createQuery("delete from Concert").executeUpdate();
     }
 
     @Test
     void shouldSaveConcert() {
         Concert concert = new Concert("Concierto de Navidad", "Concierto navidad 2029", LocalDateTime.of(2029, 12, 25, 20, 0), LocalDateTime.of(2029, 12, 25, 19, 0), "https://www.youtube.com/watch?v=1");
         concertRepository.save(concert);
-        Concert concertDB = testEntityManager.getEntityManager().createQuery("from concerts", Concert.class).getSingleResult();
+        Concert concertDB = testEntityManager.getEntityManager().createQuery("from Concert", Concert.class).getSingleResult();
         assertEquals(concert, concertDB);
     }
 
@@ -73,7 +73,7 @@ public class ConcertRepositoryIT {
         concert = testEntityManager.persist(concert);
         concert.setTitle("Concierto de Navidad 2029");
         concertRepository.save(concert);
-        Concert concertDB = testEntityManager.getEntityManager().createQuery("from concerts", Concert.class).getSingleResult();
+        Concert concertDB = testEntityManager.getEntityManager().createQuery("from Concert", Concert.class).getSingleResult();
         assertEquals(concert, concertDB);
     }
 }

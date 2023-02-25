@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
@@ -38,7 +38,7 @@ public class User {
     @Column(name = "position")
     private String position;
 
-    @Column(name = "id_instrument")
+    @PrimaryKeyJoinColumn(name = "id_instrument")
     @OneToOne(cascade = CascadeType.ALL)
     private Instrument instrument;
 
