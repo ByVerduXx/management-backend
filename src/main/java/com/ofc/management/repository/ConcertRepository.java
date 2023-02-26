@@ -4,7 +4,8 @@ import com.ofc.management.model.Concert;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ConcertRepository extends JpaRepository<Concert, Integer> {
-    List<Concert> findByTitle(String title);
+    Optional<List<Concert>> findByTitle(String title);
 }

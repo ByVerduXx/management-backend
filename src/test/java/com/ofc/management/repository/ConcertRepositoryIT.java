@@ -48,7 +48,7 @@ public class ConcertRepositoryIT {
     void shouldFindConcertByTitle() {
         testEntityManager.persist(new Concert("Concierto de Navidad", "Concierto navidad 2029", LocalDateTime.of(2029, 12, 25, 20, 0), LocalDateTime.of(2029, 12, 25, 19, 0), "https://www.youtube.com/watch?v=1"));
         testEntityManager.persist(new Concert("Concierto de Navidad", "Concierto navidad 2029", LocalDateTime.of(2029, 12, 25, 20, 0), LocalDateTime.of(2029, 12, 25, 19, 0), "https://www.youtube.com/watch?v=1"));
-        List<Concert> concerts = concertRepository.findByTitle("Concierto de Navidad");
+        List<Concert> concerts = concertRepository.findByTitle("Concierto de Navidad").get();
         assertEquals(2, concerts.size());
     }
 

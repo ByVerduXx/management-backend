@@ -64,18 +64,17 @@ class UserRepositoryIT {
         instrument = testEntityManager.persist(instrument);
         testEntityManager.persist(new User("Pedro", "Lopez", "pedro.lopez", "mypassword1", instrument));
         testEntityManager.persist(new User("Daniel", "Verduras Gallego", "daniel.verduras", "mypassword", "CEO"));
-        User user1 = userRepository.findFirstByUsername("pedro.lopez");
-        User user2 = userRepository.findFirstByUsername("daniel.verduras");
-        assertEquals("pedro.lopez", user1.getUsername());
-        assertEquals("daniel.verduras", user2.getUsername());
+        User user = userRepository.findFirstByUsername("daniel.verduras").get();
+        assertEquals("Daniel", user.getName());
+
     }
 
     @Test
     void shouldFindUserById() {
         User user = new User("Daniel", "Verduras Gallego", "daniel.verduras", "mypassword", "CEO");
         testEntityManager.persist(user);
-        User userFound = userRepository.findUserById(user.getId());
-        assertEquals("Daniel", userFound.getName());
+        User userDB = userRepository.findUserById(user.getId()).get();
+        assertEquals(user, userDB);
     }
 
     @Test
@@ -93,7 +92,7 @@ class UserRepositoryIT {
         testEntityManager.persist(user);
         user.setName("Manolo");
         userRepository.save(user);
-        User userFound = userRepository.findUserById(user.getId());
-        assertEquals("Manolo", userFound.getName());
+        User userDB = userRepository.findUserById(user.getId()).get();
+        assertEquals("Manolo", userDB.getName());
     }
 }

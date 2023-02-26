@@ -3,8 +3,10 @@ package com.ofc.management.repository;
 import com.ofc.management.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Integer> {
-    User findFirstByUsername(String s);
+import java.util.Optional;
 
-    User findUserById(Integer id);
+public interface UserRepository extends JpaRepository<User, Integer> {
+    Optional<User> findFirstByUsername(String s);
+
+    Optional<User> findUserById(Integer id);
 }

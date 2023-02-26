@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+
 import java.util.List;
 
 @Entity
@@ -42,14 +44,14 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     private Instrument instrument;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     List<Notification> notifications;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     List<Announcement> announcements;
 
     // list of user's concerts (as a musician)
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     List<MusicianConcert> concerts;
 
     public User(Integer id, String name, String lastName, String username, String password, String position) {
