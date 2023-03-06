@@ -108,11 +108,33 @@
 					</excludes>
 				</configuration>
 			</plugin>
-
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<configuration>
+					<propertyName>jacoco.agent.argLine</propertyName>
+					<includes>
+						<include>com/comoyo/**</include>
+					</includes>
+					<destFile>${project.build.directory}/jacoco-integration.exec</destFile>
+					<dataFile>${project.build.directory}/jacoco-integration.exec</dataFile>
+				</configuration>
+				<executions>
+					<execution>
+						<id>agent</id>
+						<goals><goal>prepare-agent</goal></goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<version>3.0.0-M9</version>
+				<configuration>
+					<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+					<!--suppress UnresolvedMavenProperty -->
+					<argLine>${jacoco.agent.argLine}</argLine>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>

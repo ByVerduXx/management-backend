@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.ofc.management.repository.UserRepositoryIT
--------------------------------------------------------------------------------
-Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.193 s - in com.ofc.management.repository.UserRepositoryIT

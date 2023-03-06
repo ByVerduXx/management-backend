@@ -1,3 +1,3 @@
-com\ofc\management\repository\UserRepositoryIT.class
-com\ofc\management\ManagementApplicationIT.class
-com\ofc\management\repository\ConcertRepositoryIT.class
+com/ofc/management/repository/UserRepositoryIT.class
+com/ofc/management/repository/ConcertRepositoryIT.class
+com/ofc/management/ManagementApplicationIT.class
