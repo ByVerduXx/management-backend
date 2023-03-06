@@ -8,6 +8,7 @@ class ManagementApplicationIT {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }

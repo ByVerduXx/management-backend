@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class ConcertRepositoryIT {
+class ConcertRepositoryIT {
 
     @Autowired
     private ConcertRepository concertRepository;
