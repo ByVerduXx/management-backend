@@ -5,11 +5,8 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode
-public class MusicianResponseDTO {
+public class InstrumentResponseDTO {
+
     private Integer id;
     private String name;
-    private String lastName;
-    private String username;
-    private InstrumentResponseDTO instrument;
-
 }
