@@ -6,12 +6,14 @@ import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "instruments")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Instrument {
+public class Instrument implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

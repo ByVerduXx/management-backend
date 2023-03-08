@@ -15,7 +15,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="management" options="-parameters" />
-      <module name="management-backend" options="-parameters" />
+      <module name="management-backend" options="" />
     </option>
   </component>
 </project>

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -16,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode
 @NoArgsConstructor
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,14 +46,14 @@ public class User {
     private Instrument instrument;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    List<Notification> notifications;
+    private List<Notification> notifications;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    List<Announcement> announcements;
+    private List<Announcement> announcements;
 
     // list of user's concerts (as a musician)
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    List<MusicianConcert> concerts;
+    private List<MusicianConcert> concerts;
 
     public User(Integer id, String name, String lastName, String username, String password, String position) {
         this.id = id;

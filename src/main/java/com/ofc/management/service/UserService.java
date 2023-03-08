@@ -43,7 +43,7 @@ public class UserService {
     }
 
     public MusicianResponseDTO updateMusician() {
-
+        return new MusicianResponseDTO();
     }
 
 }
