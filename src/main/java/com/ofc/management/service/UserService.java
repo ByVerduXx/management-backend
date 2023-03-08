@@ -8,6 +8,7 @@ import com.ofc.management.repository.InstrumentRepository;
 import com.ofc.management.repository.UserRepository;
 import com.ofc.management.service.exception.UsernameAlreadyExists;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final InstrumentRepository instrumentRepository;
     private final UserMapper userMapper;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
 
@@ -28,6 +30,8 @@ public class UserService {
             throw new UsernameAlreadyExists();
         }
         User user = userMapper.toUser(userRequestDTO);
+        user.setPassword(bCryptPasswordEncoder.encode(userRequestDTO.getPassword()));
+        //TODO throw instrument does not exist
         user.setInstrument(instrumentRepository.findFirstByName(userRequestDTO.getInstrument().getName()).orElseThrow());
         userRepository.save(user);
         return userMapper.toUserResponseDTO(user);
