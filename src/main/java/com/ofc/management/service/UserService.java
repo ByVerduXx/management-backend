@@ -1,9 +1,10 @@
 package com.ofc.management.service;
 
 import com.ofc.management.model.User;
-import com.ofc.management.model.dto.MusicianRequestDTO;
-import com.ofc.management.model.dto.MusicianResponseDTO;
+import com.ofc.management.model.dto.UserRequestDTO;
+import com.ofc.management.model.dto.UserResponseDTO;
 import com.ofc.management.model.mapper.UserMapper;
+import com.ofc.management.repository.InstrumentRepository;
 import com.ofc.management.repository.UserRepository;
 import com.ofc.management.service.exception.UsernameAlreadyExists;
 import lombok.RequiredArgsConstructor;
@@ -18,32 +19,49 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final InstrumentRepository instrumentRepository;
     private final UserMapper userMapper;
 
-    public MusicianResponseDTO createMusician(MusicianRequestDTO musicianRequestDTO) {
+    public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
 
-        if (userRepository.findFirstByUsername(musicianRequestDTO.getUsername()).isPresent()) {
+        if (userRepository.findFirstByUsername(userRequestDTO.getUsername()).isPresent()) {
             throw new UsernameAlreadyExists();
         }
-        User musician = userMapper.toUser(musicianRequestDTO);
-        userRepository.save(musician);
-        return userMapper.toMusicianResponseDTO(musician);
+        User user = userMapper.toUser(userRequestDTO);
+        user.setInstrument(instrumentRepository.findFirstByName(userRequestDTO.getInstrument().getName()).orElseThrow());
+        userRepository.save(user);
+        return userMapper.toUserResponseDTO(user);
     }
 
-    public List<MusicianResponseDTO> findAllMusicians() {
+    public List<UserResponseDTO> findAllMusicians() {
         Iterator<User> usersIterator = userRepository.findAll().iterator();
-        List<MusicianResponseDTO> musicians = new ArrayList<>();
+        List<UserResponseDTO> musicians = new ArrayList<>();
         while (usersIterator.hasNext()) {
             User user = usersIterator.next();
-            if (user.getPosition() == null) {
-                musicians.add(userMapper.toMusicianResponseDTO(user));
+            if (user.getRole().equals("USER")) {
+                musicians.add(userMapper.toUserResponseDTO(user));
             }
         }
         return musicians;
     }
 
-    public MusicianResponseDTO updateMusician() {
-        return new MusicianResponseDTO();
+    public UserResponseDTO updateUser(Integer id, UserRequestDTO userRequestDTO) {
+        //TODO throw user does not exist
+        User user = userRepository.findUserById(id).orElseThrow();
+        user.setName(userRequestDTO.getName());
+        user.setLastName(userRequestDTO.getLastName());
+        user.setInstrument(userMapper.toUser(userRequestDTO).getInstrument());
+        userRepository.save(user);
+        return userMapper.toUserResponseDTO(user);
     }
 
+    public List<UserResponseDTO> findAll() {
+        Iterator<User> usersIterator = userRepository.findAll().iterator();
+        List<UserResponseDTO> users = new ArrayList<>();
+        while (usersIterator.hasNext()) {
+            User user = usersIterator.next();
+            users.add(userMapper.toUserResponseDTO(user));
+        }
+        return users;
+    }
 }

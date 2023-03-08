@@ -38,8 +38,8 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "position")
-    private String position;
+    @Column(name = "role")
+    private String role;
 
     @PrimaryKeyJoinColumn(name = "id_instrument")
     @OneToOne(cascade = CascadeType.ALL)
@@ -55,37 +55,39 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<MusicianConcert> concerts;
 
-    public User(Integer id, String name, String lastName, String username, String password, String position) {
+    public User(Integer id, String name, String lastName, String username, String password, String role) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
-        this.position = position;
+        this.role = role;
     }
 
-    public User(String name, String lastName, String username, String password, String position) {
+    public User(String name, String lastName, String username, String password, String role) {
         this.name = name;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
-        this.position = position;
+        this.role = role;
     }
 
-    public User(Integer id, String name, String lastName, String username, String password, Instrument instrument) {
+    public User(Integer id, String name, String lastName, String username, String password, Instrument instrument, String role) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.instrument = instrument;
+        this.role = role;
     }
 
-    public User(String name, String lastName, String username, String password, Instrument instrument) {
+    public User(String name, String lastName, String username, String password, Instrument instrument, String role) {
         this.name = name;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.instrument = instrument;
+        this.role = role;
     }
 }

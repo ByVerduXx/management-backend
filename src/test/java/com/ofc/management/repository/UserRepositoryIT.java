@@ -32,8 +32,8 @@ class UserRepositoryIT {
     void shouldSaveUser() {
         Instrument instrument = new Instrument("Violin");
         instrument = testEntityManager.persist(instrument);
-        User user = new User("Daniel", "Verduras Gallego", "daniel.verduras", "mypassword", instrument);
-        List<User> users = List.of(new User("Daniel", "Verduras Gallego", "daniel.verduras", "mypassword", instrument));
+        User user = new User("Daniel", "Verduras Gallego", "daniel.verduras", "mypassword", instrument, "USER");
+        List<User> users = List.of(new User("Daniel", "Verduras Gallego", "daniel.verduras", "mypassword", instrument, "USER"));
         userRepository.save(user);
         List<User> userDB = testEntityManager.getEntityManager().createQuery("from User").getResultList();
         assertEquals(users, userDB);
@@ -41,8 +41,8 @@ class UserRepositoryIT {
 
     @Test
     void shouldSaveAdminUser() {
-        User user = new User("Daniel", "Verduras Gallego", "daniel.verduras", "mypassword", "CEO");
-        List<User> admins = List.of(new User("Daniel", "Verduras Gallego", "daniel.verduras", "mypassword", "CEO"));
+        User user = new User("Daniel", "Verduras Gallego", "daniel.verduras", "mypassword", "ADMIN");
+        List<User> admins = List.of(new User("Daniel", "Verduras Gallego", "daniel.verduras", "mypassword", "ADMIN"));
         userRepository.save(user);
         List<User> usersDB = testEntityManager.getEntityManager().createQuery("from User").getResultList();
         assertEquals(admins, usersDB);
@@ -52,8 +52,8 @@ class UserRepositoryIT {
     void shouldFindAllUsers() {
         Instrument instrument = new Instrument("Violin");
         instrument = testEntityManager.persist(instrument);
-        testEntityManager.persist(new User("Pedro", "Lopez", "pedro.lopez", "mypassword1", instrument));
-        testEntityManager.persist(new User("Daniel", "Verduras Gallego", "daniel.verduras", "mypassword", "CEO"));
+        testEntityManager.persist(new User("Pedro", "Lopez", "pedro.lopez", "mypassword1", instrument, "USER"));
+        testEntityManager.persist(new User("Daniel", "Verduras Gallego", "daniel.verduras", "mypassword", "ADMIN"));
         List<User> friends = userRepository.findAll();
         assertEquals(2, friends.size());
     }
@@ -62,8 +62,8 @@ class UserRepositoryIT {
     void shouldFindUserByUsername() {
         Instrument instrument = new Instrument("Violin");
         instrument = testEntityManager.persist(instrument);
-        testEntityManager.persist(new User("Pedro", "Lopez", "pedro.lopez", "mypassword1", instrument));
-        testEntityManager.persist(new User("Daniel", "Verduras Gallego", "daniel.verduras", "mypassword", "CEO"));
+        testEntityManager.persist(new User("Pedro", "Lopez", "pedro.lopez", "mypassword1", instrument, "USER"));
+        testEntityManager.persist(new User("Daniel", "Verduras Gallego", "daniel.verduras", "mypassword", "USER"));
         User user = userRepository.findFirstByUsername("daniel.verduras").get();
         assertEquals("Daniel", user.getName());
 
