@@ -8,6 +8,8 @@ import com.ofc.management.model.dto.UserUpdateDTO;
 import com.ofc.management.model.mapper.UserMapper;
 import com.ofc.management.repository.InstrumentRepository;
 import com.ofc.management.repository.UserRepository;
+import com.ofc.management.service.exception.InstrumentDoesNotExist;
+import com.ofc.management.service.exception.UserDoesNotExist;
 import com.ofc.management.service.exception.UsernameAlreadyExists;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -33,8 +35,7 @@ public class UserService {
         }
         User user = userMapper.toUser(userRequestDTO);
         user.setPassword(bCryptPasswordEncoder.encode(userRequestDTO.getPassword()));
-        //TODO throw instrument does not exist
-        user.setInstrument(instrumentRepository.findFirstByName(userRequestDTO.getInstrument().getName()).orElseThrow());
+        user.setInstrument(instrumentRepository.findFirstByName(userRequestDTO.getInstrument().getName()).orElseThrow(InstrumentDoesNotExist::new));
         userRepository.save(user);
         return userMapper.toUserResponseDTO(user);
     }
@@ -52,8 +53,7 @@ public class UserService {
     }
 
     public UserResponseDTO updateUser(Integer id, UserUpdateDTO userUpdateDTO) {
-        //TODO throw user does not exist
-        User user = userRepository.findUserById(id).orElseThrow();
+        User user = userRepository.findUserById(id).orElseThrow(UserDoesNotExist::new);
         user.setName(userUpdateDTO.getName());
         user.setLastName(userUpdateDTO.getLastName());
         if (!user.getUsername().equals(userUpdateDTO.getUsername())) {
@@ -66,7 +66,7 @@ public class UserService {
         if (userUpdateDTO.getInstrument() == null) {
             user.setInstrument(null);
         } else if (user.getInstrument() == null || !user.getInstrument().getName().equals(userUpdateDTO.getInstrument().getName())){
-            user.setInstrument(instrumentRepository.findFirstByName(userUpdateDTO.getInstrument().getName()).orElseThrow());
+            user.setInstrument(instrumentRepository.findFirstByName(userUpdateDTO.getInstrument().getName()).orElseThrow(InstrumentDoesNotExist::new));
         }
         user.setRole(userUpdateDTO.getRole());
         userRepository.save(user);
