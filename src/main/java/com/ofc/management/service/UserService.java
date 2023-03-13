@@ -1,8 +1,10 @@
 package com.ofc.management.service;
 
+import com.ofc.management.model.Instrument;
 import com.ofc.management.model.User;
 import com.ofc.management.model.dto.UserRequestDTO;
 import com.ofc.management.model.dto.UserResponseDTO;
+import com.ofc.management.model.dto.UserUpdateDTO;
 import com.ofc.management.model.mapper.UserMapper;
 import com.ofc.management.repository.InstrumentRepository;
 import com.ofc.management.repository.UserRepository;
@@ -49,12 +51,24 @@ public class UserService {
         return musicians;
     }
 
-    public UserResponseDTO updateUser(Integer id, UserRequestDTO userRequestDTO) {
+    public UserResponseDTO updateUser(Integer id, UserUpdateDTO userUpdateDTO) {
         //TODO throw user does not exist
         User user = userRepository.findUserById(id).orElseThrow();
-        user.setName(userRequestDTO.getName());
-        user.setLastName(userRequestDTO.getLastName());
-        user.setInstrument(userMapper.toUser(userRequestDTO).getInstrument());
+        user.setName(userUpdateDTO.getName());
+        user.setLastName(userUpdateDTO.getLastName());
+        if (!user.getUsername().equals(userUpdateDTO.getUsername())) {
+            if (!userRepository.findAllByUsername(userUpdateDTO.getUsername()).isEmpty()) {
+                throw new UsernameAlreadyExists();
+            }
+            user.setUsername(userUpdateDTO.getUsername());
+        }
+
+        if (userUpdateDTO.getInstrument() == null) {
+            user.setInstrument(null);
+        } else if (user.getInstrument() == null || !user.getInstrument().getName().equals(userUpdateDTO.getInstrument().getName())){
+            user.setInstrument(instrumentRepository.findFirstByName(userUpdateDTO.getInstrument().getName()).orElseThrow());
+        }
+        user.setRole(userUpdateDTO.getRole());
         userRepository.save(user);
         return userMapper.toUserResponseDTO(user);
     }
