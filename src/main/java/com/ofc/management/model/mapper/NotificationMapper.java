@@ -2,13 +2,11 @@ package com.ofc.management.model.mapper;
 
 import com.ofc.management.model.Notification;
 import com.ofc.management.model.dto.NotificationResponseDTO;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-@RequiredArgsConstructor
 public class NotificationMapper {
 
     public NotificationResponseDTO toNotificationResponseDTO(Notification notification) {

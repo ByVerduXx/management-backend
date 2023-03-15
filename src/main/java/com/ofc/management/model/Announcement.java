@@ -30,7 +30,7 @@ public class Announcement implements Serializable {
 
     private LocalDateTime date;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user")
     private User user;
 

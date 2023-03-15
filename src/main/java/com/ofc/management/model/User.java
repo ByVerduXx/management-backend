@@ -90,4 +90,8 @@ public class User implements Serializable {
         this.instrument = instrument;
         this.role = role;
     }
+
+    public User(Integer id) {
+        this.id = id;
+    }
 }

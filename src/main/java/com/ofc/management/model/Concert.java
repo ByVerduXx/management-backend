@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "concerts")
@@ -32,6 +33,9 @@ public class Concert implements Serializable {
     private LocalDateTime soundcheck;
 
     private String scores;
+
+    @OneToMany(mappedBy = "concert", fetch = FetchType.LAZY)
+    private List<MusicianConcert> musicians;
 
     public Concert(String title, String description, LocalDateTime date, LocalDateTime soundcheck, String scores) {
         this.title = title;
