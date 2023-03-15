@@ -1,6 +1,7 @@
 package com.ofc.management.controller;
 
 import com.ofc.management.service.exception.InstrumentDoesNotExist;
+import com.ofc.management.service.exception.OldPasswordDoesNotMatch;
 import com.ofc.management.service.exception.UserDoesNotExist;
 import com.ofc.management.service.exception.UsernameAlreadyExists;
 import org.springframework.http.HttpStatus;
@@ -29,9 +30,15 @@ public class AppControllerAdvice {
         return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(OldPasswordDoesNotMatch.class)
+    public ResponseEntity<Object> handleOldPasswordDoesNotMatchException(OldPasswordDoesNotMatch e){
+        String err = e.getMessage();
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+    }
+
+    /**@ExceptionHandler
     public ResponseEntity<Object> handleException(Exception e){
         String err = e.getMessage();
         return new ResponseEntity<>(err, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+    }**/
 }

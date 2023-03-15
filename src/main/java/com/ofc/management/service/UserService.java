@@ -1,14 +1,13 @@
 package com.ofc.management.service;
 
-import com.ofc.management.model.Instrument;
 import com.ofc.management.model.User;
-import com.ofc.management.model.dto.UserRequestDTO;
-import com.ofc.management.model.dto.UserResponseDTO;
-import com.ofc.management.model.dto.UserUpdateDTO;
+import com.ofc.management.model.dto.*;
 import com.ofc.management.model.mapper.UserMapper;
 import com.ofc.management.repository.InstrumentRepository;
 import com.ofc.management.repository.UserRepository;
+import com.ofc.management.security.JWTService;
 import com.ofc.management.service.exception.InstrumentDoesNotExist;
+import com.ofc.management.service.exception.OldPasswordDoesNotMatch;
 import com.ofc.management.service.exception.UserDoesNotExist;
 import com.ofc.management.service.exception.UsernameAlreadyExists;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +26,8 @@ public class UserService {
     private final InstrumentRepository instrumentRepository;
     private final UserMapper userMapper;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    private final JWTService jwtService;
 
     public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
 
@@ -82,4 +83,28 @@ public class UserService {
         }
         return users;
     }
+
+    public UserResponseDTO findUserById(Integer id) {
+        User user = userRepository.findUserById(id).orElseThrow(UserDoesNotExist::new);
+        return userMapper.toUserResponseDTO(user);
+    }
+
+    public void deleteUser(Integer id) {
+        User user = userRepository.findUserById(id).orElseThrow(UserDoesNotExist::new);
+        userRepository.delete(user);
+    }
+
+    public UserProfileDTO getProfile(String token) {
+        return userMapper.toUserProfileDTO(userRepository.findFirstByUsername(jwtService.extractUsername(token)).orElseThrow(UserDoesNotExist::new));
+    }
+
+    public void updatePassword(String token, ChangePasswordDTO changePasswordDTO) {
+        User user = userRepository.findFirstByUsername(jwtService.extractUsername(token)).orElseThrow(UserDoesNotExist::new);
+        if (!bCryptPasswordEncoder.matches(changePasswordDTO.getOldPassword(), user.getPassword())) {
+            throw new OldPasswordDoesNotMatch();
+        }
+        user.setPassword(bCryptPasswordEncoder.encode(changePasswordDTO.getNewPassword()));
+        userRepository.save(user);
+    }
+
 }
