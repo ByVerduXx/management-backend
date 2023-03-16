@@ -5,6 +5,8 @@ import com.ofc.management.model.dto.InstrumentRequestDTO;
 import com.ofc.management.model.dto.InstrumentResponseDTO;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class InstrumentMapper {
 
@@ -19,5 +21,11 @@ public class InstrumentMapper {
         instrumentResponseDTO.setId(instrument.getId());
         instrumentResponseDTO.setName(instrument.getName());
         return instrumentResponseDTO;
+    }
+
+    public List<InstrumentResponseDTO> toInstrumentResponseDTOs(List<Instrument> instruments) {
+        return instruments.stream()
+                .map(this::toInstrumentResponseDTO)
+                .toList();
     }
 }

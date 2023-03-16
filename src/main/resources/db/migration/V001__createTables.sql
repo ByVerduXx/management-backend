@@ -64,6 +64,27 @@ CREATE TABLE IF NOT EXISTS `ofc`.`instruments` (
   PRIMARY KEY (`id_instrument`))
 ENGINE = InnoDB;
 
+INSERT INTO `ofc`.`instruments` (`id_instrument`, `name`) 
+VALUES  (1, 'Violín'),
+        (2, 'Viola'),
+        (3, 'Violonchelo'),
+        (4, 'Contrabajo'),
+        (5, 'Flauta'),
+        (6, 'Oboe'),
+        (7, 'Clarinete'),
+        (8, 'Fagot'),
+        (9, 'Trompeta'),
+        (10, 'Trompa'),
+        (11, 'Trombón'),
+        (12, 'Tuba'),
+        (13, 'Percusión'),
+        (14, 'Piano'),
+        (15, 'Bombardino'),
+        (16, 'Arpa'),
+        (17, 'Guitarra'),
+        (18, 'Saxofón'),
+        (19, 'Voz');
+
 
 -- -----------------------------------------------------
 -- Table `ofc`.`users`

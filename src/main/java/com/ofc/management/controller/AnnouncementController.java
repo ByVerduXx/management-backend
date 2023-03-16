@@ -37,8 +37,9 @@ public class AnnouncementController {
 
     @DeleteMapping("/{id}")
     @Secured({"ROLE_ADMIN", "ROLE_CONDUCTOR"})
-    public void deleteAnnouncement(@PathVariable Integer id) {
+    public ResponseEntity<String> deleteAnnouncement(@PathVariable Integer id) {
         announcementService.deleteAnnouncement(id);
+        return ResponseEntity.ok("Anuncio borrado");
     }
 
     @PostMapping("/{id}")

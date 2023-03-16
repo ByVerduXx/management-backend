@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface AnnouncementRepository extends JpaRepository<Announcement, Integer> {
 
     List<Announcement> findAllByUser(User user);
+
+    List<Announcement> findAllByOrderByDateDesc();
 }

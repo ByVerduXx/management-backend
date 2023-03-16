@@ -7,10 +7,12 @@ import com.ofc.management.model.mapper.AnnouncementMapper;
 import com.ofc.management.repository.AnnouncementRepository;
 import com.ofc.management.repository.UserRepository;
 import com.ofc.management.security.JWTService;
+import com.ofc.management.service.exception.AnnouncementDoesNotExist;
 import com.ofc.management.service.exception.UserDoesNotExist;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -33,23 +35,23 @@ public class AnnouncementService {
     }
 
     public void deleteAnnouncement(Integer id) {
-        announcementRepository.deleteById(id);
+        Announcement announcement = announcementRepository.findById(id).orElseThrow(AnnouncementDoesNotExist::new);
+        announcementRepository.delete(announcement);
     }
 
     public List<AnnouncementResponseDTO> findAll() {
-        return announcementMapper.toAnnouncementResponseDTOs(announcementRepository.findAll());
+        return announcementMapper.toAnnouncementResponseDTOs(announcementRepository.findAllByOrderByDateDesc());
     }
 
     public AnnouncementResponseDTO findAnnouncementById(Integer id) {
-        //TODO announcement does not exist
-        return announcementMapper.toAnnouncementResponseDTO(announcementRepository.findById(id).orElseThrow());
+        return announcementMapper.toAnnouncementResponseDTO(announcementRepository.findById(id).orElseThrow(AnnouncementDoesNotExist::new));
     }
 
     public AnnouncementResponseDTO updateAnnouncement(Integer id, AnnouncementRequestDTO announcementRequestDTO) {
-        Announcement announcement = announcementRepository.findById(id).orElseThrow();
+        Announcement announcement = announcementRepository.findById(id).orElseThrow(AnnouncementDoesNotExist::new);
         announcement.setTitle(announcementRequestDTO.getTitle());
         announcement.setContent(announcementRequestDTO.getContent());
-        announcement.setDate(announcementRequestDTO.getDate());
+        announcement.setDate(LocalDateTime.now());
         announcementRepository.save(announcement);
         return announcementMapper.toAnnouncementResponseDTO(announcement);
     }
