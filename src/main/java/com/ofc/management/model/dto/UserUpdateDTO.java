@@ -1,6 +1,5 @@
 package com.ofc.management.model.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
