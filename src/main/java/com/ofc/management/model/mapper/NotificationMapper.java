@@ -20,7 +20,7 @@ public class NotificationMapper {
         return notificationResponseDTO;
     }
 
-    public List<NotificationResponseDTO> toNotificationsResponseDTO(List<Notification> notifications) {
+    public List<NotificationResponseDTO> toNotificationResponseDTOs(List<Notification> notifications) {
         return notifications.stream().map(this::toNotificationResponseDTO).toList();
     }
 }

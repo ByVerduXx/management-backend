@@ -57,7 +57,7 @@ public class UserMapper {
         }
         userProfileDTO.setRole(user.getRole());
 
-        if (!user.getNotifications().isEmpty()) userProfileDTO.setNotifications(notificationMapper.toNotificationsResponseDTO(user.getNotifications()));
+        if (!user.getNotifications().isEmpty()) userProfileDTO.setNotifications(notificationMapper.toNotificationResponseDTOs(user.getNotifications()));
         else userProfileDTO.setNotifications(new ArrayList<>());
 
         return userProfileDTO;

@@ -11,6 +11,8 @@ import com.ofc.management.service.exception.UserDoesNotExist;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AnnouncementService {
@@ -26,6 +28,28 @@ public class AnnouncementService {
     public AnnouncementResponseDTO createAnnouncement(AnnouncementRequestDTO announcementRequestDTO, String token) {
         Announcement announcement = announcementMapper.toAnnouncement(announcementRequestDTO);
         announcement.setUser(userRepository.findFirstByUsername(jwtService.extractUsername(token)).orElseThrow(UserDoesNotExist::new));
+        announcementRepository.save(announcement);
+        return announcementMapper.toAnnouncementResponseDTO(announcement);
+    }
+
+    public void deleteAnnouncement(Integer id) {
+        announcementRepository.deleteById(id);
+    }
+
+    public List<AnnouncementResponseDTO> findAll() {
+        return announcementMapper.toAnnouncementResponseDTOs(announcementRepository.findAll());
+    }
+
+    public AnnouncementResponseDTO findAnnouncementById(Integer id) {
+        //TODO announcement does not exist
+        return announcementMapper.toAnnouncementResponseDTO(announcementRepository.findById(id).orElseThrow());
+    }
+
+    public AnnouncementResponseDTO updateAnnouncement(Integer id, AnnouncementRequestDTO announcementRequestDTO) {
+        Announcement announcement = announcementRepository.findById(id).orElseThrow();
+        announcement.setTitle(announcementRequestDTO.getTitle());
+        announcement.setContent(announcementRequestDTO.getContent());
+        announcement.setDate(announcementRequestDTO.getDate());
         announcementRepository.save(announcement);
         return announcementMapper.toAnnouncementResponseDTO(announcement);
     }

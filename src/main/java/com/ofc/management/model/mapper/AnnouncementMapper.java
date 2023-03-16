@@ -6,6 +6,8 @@ import com.ofc.management.model.dto.AnnouncementRequestDTO;
 import com.ofc.management.model.dto.AnnouncementResponseDTO;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class AnnouncementMapper {
 
@@ -29,5 +31,9 @@ public class AnnouncementMapper {
         announcementResponseDTO.setUsername(announcement.getUser().getUsername());
 
         return announcementResponseDTO;
+    }
+
+    public List<AnnouncementResponseDTO> toAnnouncementResponseDTOs(List<Announcement> announcements) {
+        return announcements.stream().map(this::toAnnouncementResponseDTO).toList();
     }
 }
