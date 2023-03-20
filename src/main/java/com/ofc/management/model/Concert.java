@@ -37,6 +37,9 @@ public class Concert implements Serializable {
     @OneToMany(mappedBy = "concert", fetch = FetchType.LAZY)
     private List<MusicianConcert> musicians;
 
+    @OneToMany(mappedBy = "concert", fetch = FetchType.LAZY)
+    private List<Rehersal> rehersals;
+
     public Concert(String title, String description, LocalDateTime date, LocalDateTime soundcheck, String scores) {
         this.title = title;
         this.description = description;
