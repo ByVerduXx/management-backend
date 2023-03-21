@@ -51,7 +51,6 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Announcement> announcements;
 
-    // list of user's concerts (as a musician)
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<MusicianConcert> concerts;
 

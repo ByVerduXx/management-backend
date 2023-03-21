@@ -62,4 +62,10 @@ public class AppControllerAdvice {
         String err = e.getMessage();
         return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(MusicianConcertDoesNotExist.class)
+    public ResponseEntity<Object> handleMusicianConcertDoesNotExistException(MusicianConcertDoesNotExist e){
+        String err = e.getMessage();
+        return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
+    }
 }
