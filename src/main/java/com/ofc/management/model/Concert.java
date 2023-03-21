@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -35,10 +36,10 @@ public class Concert implements Serializable {
     private String scores;
 
     @OneToMany(mappedBy = "concert", fetch = FetchType.LAZY)
-    private List<MusicianConcert> musicians;
+    private List<MusicianConcert> musicians = Collections.emptyList();
 
     @OneToMany(mappedBy = "concert", fetch = FetchType.LAZY)
-    private List<Rehersal> rehersals;
+    private List<Rehersal> rehersals = Collections.emptyList();
 
     public Concert(String title, String description, LocalDateTime date, LocalDateTime soundcheck, String scores) {
         this.title = title;

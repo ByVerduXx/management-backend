@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
 
 @Data
 @EqualsAndHashCode
-public class RehersalResponseDTO {
-    private Integer id;
+public class RehersalRequestDTO {
+
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime date;
     private String place;
-    private String concert;
+    private Integer concert;
 }

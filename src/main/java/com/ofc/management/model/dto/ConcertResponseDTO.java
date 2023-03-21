@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode
@@ -17,4 +18,8 @@ public class ConcertResponseDTO {
     private LocalDateTime date;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime soundcheck;
+
+    private List<MusicianConcertResponseDTO> musicians;
+
+    private List<RehersalResponseDTO> rehersals;
 }

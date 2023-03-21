@@ -20,7 +20,7 @@ public class Rehersal implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_rehearsal")
+    @Column(name = "id_rehersal")
     @EqualsAndHashCode.Exclude
     private Integer id;
 

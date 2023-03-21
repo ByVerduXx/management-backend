@@ -1,11 +1,12 @@
 package com.ofc.management.model.mapper;
 
 import com.ofc.management.model.Concert;
-import com.ofc.management.model.dto.ConcertInfoDTO;
 import com.ofc.management.model.dto.ConcertRequestDTO;
 import com.ofc.management.model.dto.ConcertResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -35,17 +36,13 @@ public class ConcertMapper {
         concertResponseDTO.setDescription(concert.getDescription());
         concertResponseDTO.setDate(concert.getDate());
         concertResponseDTO.setSoundcheck(concert.getSoundcheck());
+        concertResponseDTO.setRehersals(rehersalMapper.toRehersalResponseDTOs(concert.getRehersals()));
+        concertResponseDTO.setMusicians(musicianConcertMapper.toMusicianConcertResponseDTOs(concert.getMusicians()));
 
         return concertResponseDTO;
     }
 
-    public ConcertInfoDTO toConcertInfoDTO(Concert concert) {
-        ConcertInfoDTO concertInfoDTO = new ConcertInfoDTO();
-
-        concertInfoDTO.setConcert(toConcertResponseDTO(concert));
-        concertInfoDTO.setRehersals(rehersalMapper.toRehersalResponseDTOs(concert.getRehersals()));
-        concertInfoDTO.setMusicians(musicianConcertMapper.toMusicianConcertResponseDTOs(concert.getMusicians()));
-
-        return concertInfoDTO;
+    public List<ConcertResponseDTO> toConcertResponseDTOs(List<Concert> concerts) {
+        return concerts.stream().map(this::toConcertResponseDTO).toList();
     }
 }

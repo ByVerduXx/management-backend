@@ -38,4 +38,28 @@ public class AppControllerAdvice {
         String err = e.getMessage();
         return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(ConcertDoesNotExist.class)
+    public ResponseEntity<Object> handleConcertDoesNotExistException(ConcertDoesNotExist e){
+        String err = e.getMessage();
+        return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(TitleCannotBeVoid.class)
+    public ResponseEntity<Object> handleTitleCannotBeVoidException(TitleCannotBeVoid e){
+        String err = e.getMessage();
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(RehersalDoesNotExist.class)
+    public ResponseEntity<Object> handleRehersalDoesNotExistException(RehersalDoesNotExist e){
+        String err = e.getMessage();
+        return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(NoDateProvided.class)
+    public ResponseEntity<Object> handleNoDateProvidedException(NoDateProvided e){
+        String err = e.getMessage();
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+    }
 }

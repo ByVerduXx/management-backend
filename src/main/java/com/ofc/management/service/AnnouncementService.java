@@ -8,6 +8,7 @@ import com.ofc.management.repository.AnnouncementRepository;
 import com.ofc.management.repository.UserRepository;
 import com.ofc.management.security.JWTService;
 import com.ofc.management.service.exception.AnnouncementDoesNotExist;
+import com.ofc.management.service.exception.TitleCannotBeVoid;
 import com.ofc.management.service.exception.UserDoesNotExist;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,11 @@ public class AnnouncementService {
 
     public AnnouncementResponseDTO createAnnouncement(AnnouncementRequestDTO announcementRequestDTO, String token) {
         Announcement announcement = announcementMapper.toAnnouncement(announcementRequestDTO);
+
+        if (announcement.getTitle() == null || announcement.getTitle().equals("")) {
+            throw new TitleCannotBeVoid();
+        }
+
         announcement.setUser(userRepository.findFirstByUsername(jwtService.extractUsername(token)).orElseThrow(UserDoesNotExist::new));
         announcementRepository.save(announcement);
         return announcementMapper.toAnnouncementResponseDTO(announcement);
@@ -48,6 +54,11 @@ public class AnnouncementService {
     }
 
     public AnnouncementResponseDTO updateAnnouncement(Integer id, AnnouncementRequestDTO announcementRequestDTO) {
+
+        if (announcementRequestDTO.getTitle() == null || announcementRequestDTO.getTitle().equals("")) {
+            throw new TitleCannotBeVoid();
+        }
+
         Announcement announcement = announcementRepository.findById(id).orElseThrow(AnnouncementDoesNotExist::new);
         announcement.setTitle(announcementRequestDTO.getTitle());
         announcement.setContent(announcementRequestDTO.getContent());
