@@ -1,6 +1,7 @@
 package com.ofc.management.model.mapper;
 
 import com.ofc.management.model.Concert;
+import com.ofc.management.model.dto.ConcertProfileDTO;
 import com.ofc.management.model.dto.ConcertRequestDTO;
 import com.ofc.management.model.dto.ConcertResponseDTO;
 import lombok.RequiredArgsConstructor;
@@ -44,5 +45,18 @@ public class ConcertMapper {
 
     public List<ConcertResponseDTO> toConcertResponseDTOs(List<Concert> concerts) {
         return concerts.stream().map(this::toConcertResponseDTO).toList();
+    }
+
+    public ConcertProfileDTO toConcertProfileDTO(Concert concert) {
+        ConcertProfileDTO concertProfileDTO = new ConcertProfileDTO();
+
+        concertProfileDTO.setId(concert.getId());
+        concertProfileDTO.setName(concert.getTitle());
+        concertProfileDTO.setDescription(concert.getDescription());
+        concertProfileDTO.setDate(concert.getDate());
+        concertProfileDTO.setSoundcheck(concert.getSoundcheck());
+        concertProfileDTO.setRehersals(rehersalMapper.toRehersalResponseDTOs(concert.getRehersals()));
+
+        return concertProfileDTO;
     }
 }

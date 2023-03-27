@@ -2,6 +2,7 @@ package com.ofc.management.model.mapper;
 
 import com.ofc.management.model.MusicianConcert;
 import com.ofc.management.model.MusicianConcertPK;
+import com.ofc.management.model.dto.MusicianConcertProfileDTO;
 import com.ofc.management.model.dto.MusicianConcertRequestDTO;
 import com.ofc.management.model.dto.MusicianConcertResponseDTO;
 import org.springframework.stereotype.Component;
@@ -42,5 +43,16 @@ public class MusicianConcertMapper {
 
     public List<MusicianConcertResponseDTO> toMusicianConcertResponseDTOs(List<MusicianConcert> musicianConcerts) {
         return musicianConcerts.stream().map(this::toMusicianConcertResponseDTO).toList();
+    }
+
+    public MusicianConcertProfileDTO toMusicianConcertProfileDTO(MusicianConcert musicianConcert) {
+        MusicianConcertProfileDTO musicianConcertProfileDTO = new MusicianConcertProfileDTO();
+
+        musicianConcertProfileDTO.setRole(musicianConcert.getRole());
+        musicianConcertProfileDTO.setPayment(musicianConcert.getPayment());
+        musicianConcertProfileDTO.setAccepted(musicianConcert.isAccepted());
+        musicianConcertProfileDTO.setPending(musicianConcert.isPending());
+
+        return musicianConcertProfileDTO;
     }
 }

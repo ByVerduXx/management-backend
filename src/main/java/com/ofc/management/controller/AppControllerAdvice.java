@@ -3,6 +3,7 @@ package com.ofc.management.controller;
 import com.ofc.management.service.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -65,6 +66,12 @@ public class AppControllerAdvice {
 
     @ExceptionHandler(MusicianConcertDoesNotExist.class)
     public ResponseEntity<Object> handleMusicianConcertDoesNotExistException(MusicianConcertDoesNotExist e){
+        String err = e.getMessage();
+        return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<Object> handleUsernameNotFoundException(UsernameNotFoundException e){
         String err = e.getMessage();
         return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
     }
