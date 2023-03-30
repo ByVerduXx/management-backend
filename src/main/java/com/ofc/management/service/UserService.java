@@ -84,18 +84,17 @@ public class UserService {
         return users;
     }
 
-    public UserResponseDTO findUserById(Integer id) {
-        User user = userRepository.findUserById(id).orElseThrow(UserDoesNotExist::new);
-        return userMapper.toUserResponseDTO(user);
+    public UserResponseDTO findUserByIdWithAuth(Integer id, String token) {
+        User user = userRepository.findFirstByUsername(jwtService.extractUsername(token)).orElseThrow(UserDoesNotExist::new);
+        if (user.getId().equals(id) || user.getRole().equals("ADMIN")) {
+            return userMapper.toUserResponseDTO(user);
+        }
+        throw new UserDoesNotExist();
     }
 
     public void deleteUser(Integer id) {
         User user = userRepository.findUserById(id).orElseThrow(UserDoesNotExist::new);
         userRepository.delete(user);
-    }
-
-    public UserProfileDTO getProfile(String token) {
-        return userMapper.toUserProfileDTO(userRepository.findFirstByUsername(jwtService.extractUsername(token)).orElseThrow(UserDoesNotExist::new));
     }
 
     public void updatePassword(String token, ChangePasswordDTO changePasswordDTO) {
@@ -107,4 +106,9 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void resetUserPassword(Integer id, ResetPasswordDTO password) {
+        User user = userRepository.findUserById(id).orElseThrow(UserDoesNotExist::new);
+        user.setPassword(bCryptPasswordEncoder.encode(password.getPassword()));
+        userRepository.save(user);
+    }
 }

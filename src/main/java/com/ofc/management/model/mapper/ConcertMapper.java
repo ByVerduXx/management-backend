@@ -37,6 +37,7 @@ public class ConcertMapper {
         concertResponseDTO.setDescription(concert.getDescription());
         concertResponseDTO.setDate(concert.getDate());
         concertResponseDTO.setSoundcheck(concert.getSoundcheck());
+        concertResponseDTO.setScores(concert.getScores());
         concertResponseDTO.setRehersals(rehersalMapper.toRehersalResponseDTOs(concert.getRehersals()));
         concertResponseDTO.setMusicians(musicianConcertMapper.toMusicianConcertResponseDTOs(concert.getMusicians()));
 
@@ -55,6 +56,7 @@ public class ConcertMapper {
         concertProfileDTO.setDescription(concert.getDescription());
         concertProfileDTO.setDate(concert.getDate());
         concertProfileDTO.setSoundcheck(concert.getSoundcheck());
+        concertProfileDTO.setScores(concert.getScores());
         concertProfileDTO.setRehersals(rehersalMapper.toRehersalResponseDTOs(concert.getRehersals()));
 
         return concertProfileDTO;

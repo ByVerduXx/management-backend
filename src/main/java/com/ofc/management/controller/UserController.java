@@ -34,10 +34,15 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUser(id, userUpdateDTO));
     }
 
+    @PostMapping("/{id}/password")
+    public ResponseEntity<String> updateUserPassword(@PathVariable Integer id, @RequestBody ResetPasswordDTO password) {
+        userService.resetUserPassword(id, password);
+        return ResponseEntity.ok("Contraseña actualizada");
+    }
+
     @GetMapping("/{id}")
-    @Secured({"ROLE_ADMIN"})
-    public ResponseEntity<UserResponseDTO> getUser(@PathVariable Integer id) {
-        return ResponseEntity.ok(userService.findUserById(id));
+    public ResponseEntity<UserResponseDTO> getUser(@PathVariable Integer id, @RequestHeader("Authorization") String token) {
+        return ResponseEntity.ok(userService.findUserByIdWithAuth(id, token.substring(7)));
     }
 
     @DeleteMapping("/{id}")
@@ -53,12 +58,7 @@ public class UserController {
         return ResponseEntity.ok(userService.findAllMusicians());
     }
 
-    @GetMapping("/profile")
-    public ResponseEntity<UserProfileDTO> getProfile(@RequestHeader("Authorization") String token) {
-        return ResponseEntity.ok(userService.getProfile(token.substring(7)));
-    }
-
-    @PostMapping("/profile/password")
+    @PostMapping("/password")
     public ResponseEntity<String> updatePassword(@RequestHeader("Authorization") String token, @RequestBody ChangePasswordDTO password) {
         userService.updatePassword(token.substring(7), password);
         return ResponseEntity.ok("Contraseña actualizada");

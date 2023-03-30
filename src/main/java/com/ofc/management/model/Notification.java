@@ -21,6 +21,7 @@ public class Notification implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_notification")
+    @EqualsAndHashCode.Exclude
     private Integer id;
 
     private String title;

@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class InstrumentRequestDTO {
-
-    private String name;
+public class ResetPasswordDTO {
+    private String password;
 }

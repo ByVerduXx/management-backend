@@ -9,7 +9,6 @@ import jakarta.persistence.*;
 
 
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -44,15 +43,6 @@ public class User implements Serializable {
     @PrimaryKeyJoinColumn(name = "id_instrument")
     @OneToOne(cascade = CascadeType.ALL)
     private Instrument instrument;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Notification> notifications;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Announcement> announcements;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<MusicianConcert> concerts;
 
     public User(Integer id, String name, String lastName, String username, String password, String role) {
         this.id = id;

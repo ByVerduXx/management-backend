@@ -31,10 +31,6 @@ public class AnnouncementService {
     public AnnouncementResponseDTO createAnnouncement(AnnouncementRequestDTO announcementRequestDTO, String token) {
         Announcement announcement = announcementMapper.toAnnouncement(announcementRequestDTO);
 
-        if (announcement.getTitle() == null || announcement.getTitle().equals("")) {
-            throw new TitleCannotBeVoid();
-        }
-
         announcement.setUser(userRepository.findFirstByUsername(jwtService.extractUsername(token)).orElseThrow(UserDoesNotExist::new));
         announcementRepository.save(announcement);
         return announcementMapper.toAnnouncementResponseDTO(announcement);

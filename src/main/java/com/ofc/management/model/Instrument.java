@@ -2,6 +2,7 @@ package com.ofc.management.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
@@ -18,6 +19,7 @@ public class Instrument implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_instrument")
+    @EqualsAndHashCode.Exclude
     private Integer id;
 
     private String name;
