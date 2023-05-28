@@ -21,4 +21,9 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(authenticationService.login(request));
     }
+
+    @PostMapping("/jwt")
+    public ResponseEntity<Boolean> validateToken(@RequestBody String token) {
+        return ResponseEntity.ok(authenticationService.isValidToken(token));
+    }
 }

@@ -1,10 +1,12 @@
 package com.ofc.management.service;
 
+import com.ofc.management.model.Concert;
+import com.ofc.management.model.MusicianConcert;
 import com.ofc.management.model.User;
 import com.ofc.management.model.dto.*;
+import com.ofc.management.model.mapper.CalendarEventMapper;
 import com.ofc.management.model.mapper.UserMapper;
-import com.ofc.management.repository.InstrumentRepository;
-import com.ofc.management.repository.UserRepository;
+import com.ofc.management.repository.*;
 import com.ofc.management.security.JWTService;
 import com.ofc.management.service.exception.InstrumentDoesNotExist;
 import com.ofc.management.service.exception.OldPasswordDoesNotMatch;
@@ -23,8 +25,16 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+
+    private final ConcertRepository concertRepository;
+
+    private final RehersalRepository rehersalRepository;
     private final InstrumentRepository instrumentRepository;
+
+    private final MusicianConcertRepository musicianConcertRepository;
     private final UserMapper userMapper;
+
+    private final CalendarEventMapper calendarEventMapper;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final JWTService jwtService;
@@ -110,5 +120,19 @@ public class UserService {
         User user = userRepository.findUserById(id).orElseThrow(UserDoesNotExist::new);
         user.setPassword(bCryptPasswordEncoder.encode(password.getPassword()));
         userRepository.save(user);
+    }
+
+    public List<CalendarEventDTO> getCalendarEvents(String token) {
+        User user = userRepository.findFirstByUsername(jwtService.extractUsername(token)).orElseThrow(UserDoesNotExist::new);
+        List<CalendarEventDTO> calendarEventDTOS = new ArrayList<>();
+        if (user.getRole().equals("ADMIN")) {
+            calendarEventDTOS.addAll(calendarEventMapper.fromConcertToCalendarEventDTOs(concertRepository.findAll()));
+            calendarEventDTOS.addAll(calendarEventMapper.fromRehersalToCalendarEventDTOs(rehersalRepository.findAll()));
+            return calendarEventDTOS;
+        }
+        List<Concert> userConcerts = musicianConcertRepository.findAllByUser(user).stream().filter(MusicianConcert::isAccepted).map(MusicianConcert::getConcert).toList();
+        calendarEventDTOS.addAll(calendarEventMapper.fromConcertToCalendarEventDTOs(userConcerts));
+        userConcerts.forEach(concert -> calendarEventDTOS.addAll(calendarEventMapper.fromRehersalToCalendarEventDTOs(concert.getRehersals())));
+        return calendarEventDTOS;
     }
 }

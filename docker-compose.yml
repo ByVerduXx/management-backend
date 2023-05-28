@@ -12,3 +12,5 @@ services:
       MYSQL_PASSWORD: ofc
     ports:
       - "3307:3306"
+    volumes:
+        - ./db:/var/lib/mysql

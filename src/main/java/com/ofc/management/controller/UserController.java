@@ -64,4 +64,9 @@ public class UserController {
         return ResponseEntity.ok("Contraseña actualizada");
     }
 
+    @GetMapping("/calendar")
+    public ResponseEntity<List<CalendarEventDTO>> getCalendarEvents(@RequestHeader("Authorization") String token) {
+        return ResponseEntity.ok(userService.getCalendarEvents(token.substring(7)));
+    }
+
 }
