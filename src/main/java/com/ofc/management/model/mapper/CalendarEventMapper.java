@@ -18,7 +18,8 @@ public class CalendarEventMapper {
 
         calendarEventDTO.setId(concert.getId());
         calendarEventDTO.setTitle(concert.getTitle());
-        calendarEventDTO.setStart(concert.getDate());
+        calendarEventDTO.setDescription(concert.getDescription());
+        calendarEventDTO.setStart(concert.getSoundcheck());
         //TODO: add place to concerts
         //calendarEventDTO.setPlace(concert.getPlace());
         calendarEventDTO.setType("C");
@@ -29,9 +30,11 @@ public class CalendarEventMapper {
     public CalendarEventDTO fromRehersalToCalendarEventDTO(Rehersal rehersal) {
         CalendarEventDTO calendarEventDTO = new CalendarEventDTO();
 
-        calendarEventDTO.setId(rehersal.getId());
-        String title = "Ensayo de " + rehersal.getConcert().getTitle();
+        calendarEventDTO.setId(rehersal.getConcert().getId());
+        String title = "Ensayo de " + rehersal.getConcert().getTitle() + " - " + rehersal.getDate().getDayOfMonth() + "/" + rehersal.getDate().getMonthValue();
         calendarEventDTO.setTitle(title);
+        String description = "Ensayo para el concierto del dia " + rehersal.getConcert().getDate().getDayOfMonth() + "/" + rehersal.getConcert().getDate().getMonthValue();
+        calendarEventDTO.setDescription(description);
         calendarEventDTO.setStart(rehersal.getDate());
         calendarEventDTO.setPlace(rehersal.getPlace());
         calendarEventDTO.setType("R");

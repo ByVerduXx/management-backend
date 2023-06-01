@@ -20,7 +20,7 @@ public class AnnouncementResponseDTO {
 
     private String content;
 
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime date;
 
     private String username;

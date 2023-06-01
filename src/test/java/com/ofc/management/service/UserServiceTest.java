@@ -15,5 +15,5 @@ public class UserServiceTest {
     private final UserMapper userMapper = mock(UserMapper.class);
     private final BCryptPasswordEncoder bCryptPasswordEncoder = mock(BCryptPasswordEncoder.class);
     private final JWTService jwtService = mock(JWTService.class);
-    private final UserService userService = new UserService(userRepository, instrumentRepository, userMapper, bCryptPasswordEncoder, jwtService);
+    //private final UserService userService = new UserService(userRepository, instrumentRepository, userMapper, bCryptPasswordEncoder, jwtService);
 }
