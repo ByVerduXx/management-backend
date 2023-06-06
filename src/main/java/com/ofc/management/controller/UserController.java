@@ -41,14 +41,20 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> getUser(@PathVariable Integer id, @RequestHeader("Authorization") String token) {
-        return ResponseEntity.ok(userService.findUserByIdWithAuth(id, token.substring(7)));
+    @Secured({"ROLE_ADMIN"})
+    public ResponseEntity<UserResponseDTO> getUser(@PathVariable Integer id) {
+        return ResponseEntity.ok(userService.findUserById(id));
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<UserResponseDTO> getProfile(@RequestHeader("Authorization") String token) {
+        return ResponseEntity.ok(userService.getProfile(token.substring(7)));
     }
 
     @DeleteMapping("/{id}")
     @Secured({"ROLE_ADMIN"})
-    public ResponseEntity<String> deleteUser(@PathVariable Integer id) {
-        userService.deleteUser(id);
+    public ResponseEntity<String> deleteUser(@PathVariable Integer id, @RequestHeader("Authorization") String token) {
+        userService.deleteUser(id, token.substring(7));
         return ResponseEntity.ok("Usuario eliminado");
     }
 

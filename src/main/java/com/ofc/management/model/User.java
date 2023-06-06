@@ -40,8 +40,8 @@ public class User implements Serializable {
     @Column(name = "role")
     private String role;
 
-    @PrimaryKeyJoinColumn(name = "id_instrument")
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_instrument")
     private Instrument instrument;
 
     public User(Integer id, String name, String lastName, String username, String password, String role) {

@@ -75,4 +75,17 @@ public class AppControllerAdvice {
         String err = e.getMessage();
         return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(VoidPasswordNotValid.class)
+    public ResponseEntity<Object> handleVoidPasswordNotValidException(VoidPasswordNotValid e){
+        String err = e.getMessage();
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AdminCannotDeleteHimself.class)
+    public ResponseEntity<Object> handleAdminCannotDeleteHimselfException(AdminCannotDeleteHimself e){
+        String err = e.getMessage();
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+    }
+
 }

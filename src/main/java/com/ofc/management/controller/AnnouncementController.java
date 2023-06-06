@@ -27,7 +27,6 @@ public class AnnouncementController {
     @PostMapping
     @Secured({"ROLE_ADMIN", "ROLE_CONDUCTOR"})
     public ResponseEntity<AnnouncementResponseDTO> createAnnouncement(@RequestBody AnnouncementRequestDTO announcementRequestDTO, @RequestHeader("Authorization") String token) {
-        System.out.println(announcementRequestDTO);
         return new ResponseEntity<>(announcementService.createAnnouncement(announcementRequestDTO, token.substring(7)), HttpStatus.CREATED);
     }
 

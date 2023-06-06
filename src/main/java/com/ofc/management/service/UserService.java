@@ -8,10 +8,7 @@ import com.ofc.management.model.mapper.CalendarEventMapper;
 import com.ofc.management.model.mapper.UserMapper;
 import com.ofc.management.repository.*;
 import com.ofc.management.security.JWTService;
-import com.ofc.management.service.exception.InstrumentDoesNotExist;
-import com.ofc.management.service.exception.OldPasswordDoesNotMatch;
-import com.ofc.management.service.exception.UserDoesNotExist;
-import com.ofc.management.service.exception.UsernameAlreadyExists;
+import com.ofc.management.service.exception.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -79,6 +76,7 @@ public class UserService {
         } else if (user.getInstrument() == null || !user.getInstrument().getName().equals(userUpdateDTO.getInstrument().getName())){
             user.setInstrument(instrumentRepository.findFirstByName(userUpdateDTO.getInstrument().getName()).orElseThrow(InstrumentDoesNotExist::new));
         }
+
         user.setRole(userUpdateDTO.getRole());
         userRepository.save(user);
         return userMapper.toUserResponseDTO(user);
@@ -94,16 +92,16 @@ public class UserService {
         return users;
     }
 
-    public UserResponseDTO findUserByIdWithAuth(Integer id, String token) {
-        User user = userRepository.findFirstByUsername(jwtService.extractUsername(token)).orElseThrow(UserDoesNotExist::new);
-        if (user.getId().equals(id) || user.getRole().equals("ADMIN")) {
-            return userMapper.toUserResponseDTO(user);
-        }
-        throw new UserDoesNotExist();
+    public UserResponseDTO findUserById(Integer id) {
+        User user = userRepository.findUserById(id).orElseThrow(UserDoesNotExist::new);
+        return userMapper.toUserResponseDTO(user);
     }
 
-    public void deleteUser(Integer id) {
+    public void deleteUser(Integer id, String jwt) {
         User user = userRepository.findUserById(id).orElseThrow(UserDoesNotExist::new);
+        if (user.getUsername().equals(jwtService.extractUsername(jwt))) {
+            throw new AdminCannotDeleteHimself();
+        }
         userRepository.delete(user);
     }
 
@@ -111,6 +109,9 @@ public class UserService {
         User user = userRepository.findFirstByUsername(jwtService.extractUsername(token)).orElseThrow(UserDoesNotExist::new);
         if (!bCryptPasswordEncoder.matches(changePasswordDTO.getOldPassword(), user.getPassword())) {
             throw new OldPasswordDoesNotMatch();
+        }
+        if (changePasswordDTO.getNewPassword().isBlank()) {
+            throw new VoidPasswordNotValid();
         }
         user.setPassword(bCryptPasswordEncoder.encode(changePasswordDTO.getNewPassword()));
         userRepository.save(user);
@@ -134,5 +135,10 @@ public class UserService {
         calendarEventDTOS.addAll(calendarEventMapper.fromConcertToCalendarEventDTOs(userConcerts));
         userConcerts.forEach(concert -> calendarEventDTOS.addAll(calendarEventMapper.fromRehersalToCalendarEventDTOs(concert.getRehersals())));
         return calendarEventDTOS;
+    }
+
+    public UserResponseDTO getProfile(String jwt) {
+        User user = userRepository.findFirstByUsername(jwtService.extractUsername(jwt)).orElseThrow(UserDoesNotExist::new);
+        return userMapper.toUserResponseDTO(user);
     }
 }
