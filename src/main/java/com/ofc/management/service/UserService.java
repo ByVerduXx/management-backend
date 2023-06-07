@@ -43,7 +43,9 @@ public class UserService {
         }
         User user = userMapper.toUser(userRequestDTO);
         user.setPassword(bCryptPasswordEncoder.encode(userRequestDTO.getPassword()));
-        user.setInstrument(instrumentRepository.findFirstByName(userRequestDTO.getInstrument().getName()).orElseThrow(InstrumentDoesNotExist::new));
+        if (userRequestDTO.getInstrument() != null) {
+            user.setInstrument(instrumentRepository.findFirstByName(userRequestDTO.getInstrument().getName()).orElseThrow(InstrumentDoesNotExist::new));
+        }
         userRepository.save(user);
         return userMapper.toUserResponseDTO(user);
     }
