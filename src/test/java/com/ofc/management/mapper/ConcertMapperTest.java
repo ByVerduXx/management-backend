@@ -23,10 +23,10 @@ class ConcertMapperTest {
     private final MusicianConcertMapper musicianConcertMapper = mock(MusicianConcertMapper.class);
     private final ConcertMapper concertMapper = new ConcertMapper(rehersalMapper, musicianConcertMapper);
 
-    private final Concert DUMMY_CONCERT = new Concert(1, "title", "description", LocalDateTime.of(2021, 7, 21, 1, 0), LocalDateTime.of(2021, 7, 21, 1, 0), "scores", Collections.emptyList(), Collections.emptyList());
-    private final ConcertRequestDTO DUMMY_CONCERT_REQUEST_DTO = new ConcertRequestDTO("title", "description", LocalDateTime.of(2021, 7, 21, 1, 0), LocalDateTime.of(2021, 7, 21, 1, 0), "scores");
-    private final ConcertProfileDTO DUMMY_CONCERT_PROFILE_DTO = new ConcertProfileDTO(1, "title", "description", LocalDateTime.of(2021, 7, 21, 1, 0), LocalDateTime.of(2021, 7, 21, 1, 0), "scores", null, List.of(new RehersalResponseDTO(1, LocalDateTime.of(2021, 7, 21, 1, 0), "place", "title")), null);
-    private final ConcertResponseDTO DUMMY_CONCERT_RESPONSE_DTO = new ConcertResponseDTO(1, "title", "description", LocalDateTime.of(2021, 7, 21, 1, 0), LocalDateTime.of(2021, 7, 21, 1, 0), "scores", List.of(new MusicianConcertResponseDTO("username", "role", BigDecimal.valueOf(100), true, false)), List.of(new RehersalResponseDTO(1, LocalDateTime.of(2021, 7, 21, 1, 0), "place", "title")));
+    private final Concert DUMMY_CONCERT = new Concert(1, "title", "description", "place", LocalDateTime.of(2021, 7, 21, 1, 0), LocalDateTime.of(2021, 7, 21, 1, 0), "scores", Collections.emptyList(), Collections.emptyList());
+    private final ConcertRequestDTO DUMMY_CONCERT_REQUEST_DTO = new ConcertRequestDTO("title", "description", "place", LocalDateTime.of(2021, 7, 21, 1, 0), LocalDateTime.of(2021, 7, 21, 1, 0), "scores");
+    private final ConcertProfileDTO DUMMY_CONCERT_PROFILE_DTO = new ConcertProfileDTO(1, "title", "description", "place", LocalDateTime.of(2021, 7, 21, 1, 0), LocalDateTime.of(2021, 7, 21, 1, 0), "scores", null, List.of(new RehersalResponseDTO(1, LocalDateTime.of(2021, 7, 21, 1, 0), "place", "title")), null);
+    private final ConcertResponseDTO DUMMY_CONCERT_RESPONSE_DTO = new ConcertResponseDTO(1, "title", "description", "place", LocalDateTime.of(2021, 7, 21, 1, 0), LocalDateTime.of(2021, 7, 21, 1, 0), "scores", List.of(new MusicianConcertResponseDTO("username", "role", BigDecimal.valueOf(100), true, false)), List.of(new RehersalResponseDTO(1, LocalDateTime.of(2021, 7, 21, 1, 0), "place", "title")));
 
 
     @Test

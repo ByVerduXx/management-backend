@@ -17,7 +17,7 @@ class RehersalMapperTest {
 
     private final RehersalMapper rehersalMapper = new RehersalMapper();
 
-    private final Concert DUMMY_CONCERT = new Concert(1, "title", "description", LocalDateTime.of(2022, 1, 1, 1, 1), LocalDateTime.of(2022, 1, 1, 1, 1), "scores", null, null);
+    private final Concert DUMMY_CONCERT = new Concert(1, "title", "description", "place", LocalDateTime.of(2022, 1, 1, 1, 1), LocalDateTime.of(2022, 1, 1, 1, 1), "scores", null, null);
     private final Rehersal DUMMY_REHERSAL = new Rehersal(1, LocalDateTime.of(2021, 1, 1, 1, 1), "place", DUMMY_CONCERT);
     private final RehersalRequestDTO DUMMY_REHERSAL_REQUEST_DTO = new RehersalRequestDTO(LocalDateTime.of(2021, 1, 1, 1, 1), "place", 1);
     private final RehersalResponseDTO DUMMY_REHERSAL_RESPONSE_DTO = new RehersalResponseDTO(1, LocalDateTime.of(2021, 1, 1, 1, 1), "place", "title");

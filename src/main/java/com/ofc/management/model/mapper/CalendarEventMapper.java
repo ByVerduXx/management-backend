@@ -20,8 +20,7 @@ public class CalendarEventMapper {
         calendarEventDTO.setTitle(concert.getTitle());
         calendarEventDTO.setDescription(concert.getDescription());
         calendarEventDTO.setStart(concert.getSoundcheck());
-        //TODO: add place to concerts
-        //calendarEventDTO.setPlace(concert.getPlace());
+        calendarEventDTO.setPlace(concert.getPlace());
         calendarEventDTO.setType("C");
 
         return calendarEventDTO;

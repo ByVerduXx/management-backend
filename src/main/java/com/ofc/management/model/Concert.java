@@ -29,6 +29,8 @@ public class Concert implements Serializable {
 
     private String description;
 
+    private String place;
+
     private LocalDateTime date;
 
     private LocalDateTime soundcheck;

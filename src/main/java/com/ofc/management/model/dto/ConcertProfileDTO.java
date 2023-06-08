@@ -17,6 +17,7 @@ public class ConcertProfileDTO {
     private Integer id;
     private String name;
     private String description;
+    private String place;
     private LocalDateTime date;
     private LocalDateTime soundcheck;
     private String scores;

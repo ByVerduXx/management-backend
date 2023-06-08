@@ -16,6 +16,7 @@ public class ConcertRequestDTO {
 
     private String title;
     private String description;
+    private String place;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime date;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm")

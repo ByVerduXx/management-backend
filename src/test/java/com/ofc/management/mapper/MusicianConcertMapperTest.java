@@ -23,7 +23,7 @@ class MusicianConcertMapperTest {
     private final MusicianConcertMapper musicianConcertMapper = new MusicianConcertMapper();
 
     private final User DUMMY_USER = new User(1, "Name", "LastName", "Username", "Password", "Role", null);
-    private final Concert DUMMY_CONCERT = new Concert(1, "title", "description", LocalDateTime.of(2021, 7, 21, 1, 0), LocalDateTime.of(2021, 7, 21, 1, 0), "scores", Collections.emptyList(), Collections.emptyList());
+    private final Concert DUMMY_CONCERT = new Concert(1, "title", "description", "place", LocalDateTime.of(2021, 7, 21, 1, 0), LocalDateTime.of(2021, 7, 21, 1, 0), "scores", Collections.emptyList(), Collections.emptyList());
     private final MusicianConcert DUMMY_MUSICIAN_CONCERT = new MusicianConcert(new MusicianConcertPK(1, 1), DUMMY_USER, DUMMY_CONCERT, "Role", BigDecimal.valueOf(100), true, false);
     private final MusicianConcertRequestDTO DUMMY_MUSICIAN_CONCERT_REQUEST_DTO = new MusicianConcertRequestDTO(1, 1, BigDecimal.valueOf(100),"Role", true, false);
     private final MusicianConcertResponseDTO DUMMY_MUSICIAN_CONCERT_RESPONSE_DTO = new MusicianConcertResponseDTO("Username", "Role", BigDecimal.valueOf(100), true, false);
