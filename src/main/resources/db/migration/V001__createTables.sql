@@ -49,8 +49,8 @@ CREATE TABLE IF NOT EXISTS `ofc`.`rehersals` (
   CONSTRAINT `fk_ensayos_conciertos`
     FOREIGN KEY (`id_concert`)
     REFERENCES `ofc`.`concerts` (`id_concert`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -105,8 +105,8 @@ CREATE TABLE IF NOT EXISTS `ofc`.`users` (
   CONSTRAINT `fk_users_instruments1`
     FOREIGN KEY (`id_instrument`)
     REFERENCES `ofc`.`instruments` (`id_instrument`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 INSERT INTO `ofc`.`users` (`id_user`, `name`, `last_name`, `username`, `password`, `role`) VALUES (1, 'admin', 'admin', 'admin', '$2a$10$JUZuRlyI6KzIdPlk.GlveO622AzArf4jRiimtdnJbXUBExr.UC3fi', 'ADMIN');
@@ -128,13 +128,13 @@ CREATE TABLE IF NOT EXISTS `ofc`.`musicians_concerts` (
   CONSTRAINT `fk_musicos_conciertos_conciertos1`
     FOREIGN KEY (`id_concert`)
     REFERENCES `ofc`.`concerts` (`id_concert`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_musicians_concerts_users1`
     FOREIGN KEY (`id_musician`)
     REFERENCES `ofc`.`users` (`id_user`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -154,8 +154,8 @@ CREATE TABLE IF NOT EXISTS `ofc`.`announcements` (
   CONSTRAINT `fk_anouncements_users1`
     FOREIGN KEY (`id_user`)
     REFERENCES `ofc`.`users` (`id_user`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE )
 ENGINE = InnoDB;
 
 
@@ -176,8 +176,8 @@ CREATE TABLE IF NOT EXISTS `ofc`.`notifications` (
   CONSTRAINT `fk_notifications_musicians_concerts1`
     FOREIGN KEY (`id_concert` , `id_musician`)
     REFERENCES `ofc`.`musicians_concerts` (`id_concert` , `id_musician`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
