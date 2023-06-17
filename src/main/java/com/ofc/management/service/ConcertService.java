@@ -51,7 +51,7 @@ public class ConcertService {
 
     public List<ConcertProfileDTO> findUserInvites(String token) {
         List<MusicianConcert> musicianConcerts = findMusicianConcerts(token);
-        return musicianConcerts.stream().filter(musicianConcert -> !musicianConcert.isAccepted() && !musicianConcert.isPending()).map(this::buildConcertProfileDTO).toList();
+        return musicianConcerts.stream().filter(musicianConcert -> !musicianConcert.isAccepted() && musicianConcert.isPending()).map(this::buildConcertProfileDTO).toList();
     }
 
     private List<MusicianConcert> findMusicianConcerts(String token) {
@@ -84,6 +84,7 @@ public class ConcertService {
 
         concert.setTitle(concertRequestDTO.getTitle());
         concert.setDescription(concertRequestDTO.getDescription());
+        concert.setPlace(concertRequestDTO.getPlace());
         concert.setDate(concertRequestDTO.getDate());
         concert.setSoundcheck(concertRequestDTO.getSoundcheck());
         concert.setScores(concertRequestDTO.getScores());

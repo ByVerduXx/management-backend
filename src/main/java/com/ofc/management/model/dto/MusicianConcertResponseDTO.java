@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MusicianConcertResponseDTO {
+    private Integer id;
     private String username;
     private String role;
     private BigDecimal payment;

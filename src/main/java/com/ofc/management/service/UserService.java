@@ -55,7 +55,7 @@ public class UserService {
         List<UserResponseDTO> musicians = new ArrayList<>();
         while (usersIterator.hasNext()) {
             User user = usersIterator.next();
-            if (user.getRole().equals("USER")) {
+            if (user.getInstrument() != null) {
                 musicians.add(userMapper.toUserResponseDTO(user));
             }
         }

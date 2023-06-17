@@ -69,7 +69,6 @@ public class ConcertController {
 
     @GetMapping("/profile")
     public ResponseEntity<List<ConcertProfileDTO>> findUserConcerts(@RequestHeader("Authorization") String token, @RequestParam(name = "accepted", required = false, defaultValue = "true") boolean accepted) {
-
         return accepted ? ResponseEntity.ok(concertService.findUserConcerts(token.substring(7))) : ResponseEntity.ok(concertService.findUserInvites(token.substring(7)));
     }
 

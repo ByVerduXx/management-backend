@@ -32,6 +32,7 @@ public class MusicianConcertMapper {
     public MusicianConcertResponseDTO toMusicianConcertResponseDTO(MusicianConcert musicianConcert) {
         MusicianConcertResponseDTO musicianConcertResponseDTO = new MusicianConcertResponseDTO();
 
+        musicianConcertResponseDTO.setId(musicianConcert.getUser().getId());
         musicianConcertResponseDTO.setUsername(musicianConcert.getUser().getUsername());
         musicianConcertResponseDTO.setRole(musicianConcert.getRole());
         musicianConcertResponseDTO.setPayment(musicianConcert.getPayment());

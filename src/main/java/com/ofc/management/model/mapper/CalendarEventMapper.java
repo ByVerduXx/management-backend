@@ -19,7 +19,11 @@ public class CalendarEventMapper {
         calendarEventDTO.setId(concert.getId());
         calendarEventDTO.setTitle(concert.getTitle());
         calendarEventDTO.setDescription(concert.getDescription());
-        calendarEventDTO.setStart(concert.getSoundcheck());
+        if (concert.getSoundcheck() != null) {
+            calendarEventDTO.setStart(concert.getSoundcheck());
+        } else {
+            calendarEventDTO.setStart(concert.getDate());
+        }
         calendarEventDTO.setPlace(concert.getPlace());
         calendarEventDTO.setType("C");
 
