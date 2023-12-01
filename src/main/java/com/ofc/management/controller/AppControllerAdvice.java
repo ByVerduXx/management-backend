@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class AppControllerAdvice {
 
+    @ExceptionHandler(ConcertDoesNotExist.class)
+    public ResponseEntity<Object> handleConcertDoesNotExistException(ConcertDoesNotExist e){
+        String err = e.getMessage();
+        return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(UsernameAlreadyExists.class)
     public ResponseEntity<Object> handleUsernameAlreadyExistsException(UsernameAlreadyExists e){
         String err = e.getMessage();
@@ -36,12 +42,6 @@ public class AppControllerAdvice {
 
     @ExceptionHandler(AnnouncementDoesNotExist.class)
     public ResponseEntity<Object> handleAnnouncementDoesNotExistException(AnnouncementDoesNotExist e){
-        String err = e.getMessage();
-        return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(ConcertDoesNotExist.class)
-    public ResponseEntity<Object> handleConcertDoesNotExistException(ConcertDoesNotExist e){
         String err = e.getMessage();
         return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
     }
