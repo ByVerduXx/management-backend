@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
@@ -12,17 +14,17 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MusicianConcert {
+public class MusicianConcert implements Serializable {
 
     @EmbeddedId
     private MusicianConcertPK id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("musicianId")
     @JoinColumn(name = "id_musician")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("concertId")
     @JoinColumn(name = "id_concert")
     private Concert concert;

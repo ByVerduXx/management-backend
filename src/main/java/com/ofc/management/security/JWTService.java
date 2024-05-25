@@ -71,4 +71,13 @@ public class JWTService {
         byte[] apiKeySecretBytes = Decoders.BASE64.decode(ACCESS_TOKEN_SECRET);
         return Keys.hmacShaKeyFor(apiKeySecretBytes);
     }
+
+    public boolean isValidToken(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token);
+            return !isTokenExpired(token);
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

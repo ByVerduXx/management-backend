@@ -27,4 +27,7 @@ public class AuthenticationService {
                 .jwt(jwt)
                 .build();
     }
+    public boolean isValidToken(String token) {
+        return jwtService.isValidToken(token);
+    }
 }

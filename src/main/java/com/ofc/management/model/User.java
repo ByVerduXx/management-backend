@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
 
 
-import java.util.List;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "users")
@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode
 @NoArgsConstructor
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,54 +37,50 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "position")
-    private String position;
+    @Column(name = "role")
+    private String role;
 
-    @PrimaryKeyJoinColumn(name = "id_instrument")
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_instrument")
     private Instrument instrument;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    List<Notification> notifications;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    List<Announcement> announcements;
-
-    // list of user's concerts (as a musician)
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    List<MusicianConcert> concerts;
-
-    public User(Integer id, String name, String lastName, String username, String password, String position) {
+    public User(Integer id, String name, String lastName, String username, String password, String role) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
-        this.position = position;
+        this.role = role;
     }
 
-    public User(String name, String lastName, String username, String password, String position) {
+    public User(String name, String lastName, String username, String password, String role) {
         this.name = name;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
-        this.position = position;
+        this.role = role;
     }
 
-    public User(Integer id, String name, String lastName, String username, String password, Instrument instrument) {
+    public User(Integer id, String name, String lastName, String username, String password, Instrument instrument, String role) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.instrument = instrument;
+        this.role = role;
     }
 
-    public User(String name, String lastName, String username, String password, Instrument instrument) {
+    public User(String name, String lastName, String username, String password, Instrument instrument, String role) {
         this.name = name;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.instrument = instrument;
+        this.role = role;
+    }
+
+    public User(Integer id) {
+        this.id = id;
     }
 }
